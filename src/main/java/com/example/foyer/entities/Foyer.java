@@ -1,5 +1,6 @@
 package com.example.foyer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.HashSet;
@@ -26,5 +27,6 @@ public class Foyer {
     // Relation avec Bloc
     @OneToMany(mappedBy = "foyer", cascade = CascadeType.ALL)
     @Builder.Default
+    @JsonIgnore
     private Set<Bloc> blocs = new HashSet<>();
 }

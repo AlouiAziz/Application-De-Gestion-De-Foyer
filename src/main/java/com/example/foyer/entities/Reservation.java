@@ -1,5 +1,6 @@
 package com.example.foyer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -34,5 +35,6 @@ public class Reservation {
             inverseJoinColumns = @JoinColumn(name = "etudiant_id")
     )
     @Builder.Default
+    @JsonIgnore
     private Set<Etudiant> etudiants = new HashSet<>();
 }

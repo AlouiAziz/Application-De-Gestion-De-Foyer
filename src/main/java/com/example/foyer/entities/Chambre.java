@@ -1,5 +1,6 @@
 package com.example.foyer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.HashSet;
@@ -30,5 +31,6 @@ public class Chambre {
     // Relation avec Réservation
     @OneToMany(mappedBy = "chambre")
     @Builder.Default
+    @JsonIgnore
     private Set<Reservation> reservations = new HashSet<>();
 }

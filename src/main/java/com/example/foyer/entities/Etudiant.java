@@ -1,5 +1,6 @@
 package com.example.foyer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -28,5 +29,6 @@ public class Etudiant {
     // Relation avec Réservation
     @ManyToMany(mappedBy = "etudiants")
     @Builder.Default
+    @JsonIgnore
     private Set<Reservation> reservations = new HashSet<>();
 }

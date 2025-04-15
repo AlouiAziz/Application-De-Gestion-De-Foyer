@@ -1,5 +1,6 @@
 package com.example.foyer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +20,6 @@ public class Universite {
 
     // Université est le parent dans la relation Universite-Foyer
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Foyer foyer;
 }
