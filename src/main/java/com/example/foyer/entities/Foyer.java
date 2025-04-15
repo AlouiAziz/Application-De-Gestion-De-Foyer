@@ -2,6 +2,8 @@ package com.example.foyer.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,4 +18,13 @@ public class Foyer {
 
     private String nomFoyer;
     private Long capaciteFoyer;
+
+    // Relation avec Université (inverse)
+    @OneToOne(mappedBy = "foyer")
+    private Universite universite;
+
+    // Relation avec Bloc
+    @OneToMany(mappedBy = "foyer", cascade = CascadeType.ALL)
+    @Builder.Default
+    private Set<Bloc> blocs = new HashSet<>();
 }

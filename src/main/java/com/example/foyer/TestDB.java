@@ -31,35 +31,43 @@ public class TestDB implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Test de création d'une université
-        Universite universite = Universite.builder()
-                .nomUniversite("Université Centrale")
-                .adresse("123 Rue de l'Université")
-                .build();
-        universiteRepository.save(universite);
-
-        // Test de création d'un foyer
+        // Création d'un foyer
         Foyer foyer = Foyer.builder()
                 .nomFoyer("Foyer Central")
                 .capaciteFoyer(200L)
                 .build();
-        foyerRepository.save(foyer);
 
-        // Test de création d'un bloc
+        // Création d'une université avec son foyer
+        Universite universite = Universite.builder()
+                .nomUniversite("Université Centrale")
+                .adresse("123 Rue de l'Université")
+                .foyer(foyer)
+                .build();
+
+        // Sauvegarde de l'université (le foyer sera sauvegardé en cascade)
+        universiteRepository.save(universite);
+
+        // Création d'un bloc lié au foyer
         Bloc bloc = Bloc.builder()
                 .nomBloc("Bloc A")
                 .capaciteBloc(50L)
+                .foyer(foyer)
                 .build();
+
+        // Sauvegarde du bloc
         blocRepository.save(bloc);
 
-        // Test de création d'une chambre
+        // Création d'une chambre liée au bloc
         Chambre chambre = Chambre.builder()
                 .numeroChambre("A101")
                 .typeC(TypeChambre.DOUBLE)
+                .bloc(bloc)
                 .build();
+
+        // Sauvegarde de la chambre
         chambreRepository.save(chambre);
 
-        // Test de création d'un étudiant
+        // Création d'un étudiant
         Etudiant etudiant = Etudiant.builder()
                 .nomEt("Dupont")
                 .prenomEt("Jean")
@@ -67,16 +75,24 @@ public class TestDB implements CommandLineRunner {
                 .ecole("École d'Ingénieurs")
                 .dateNaissance(new Date())
                 .build();
+
+        // Sauvegarde de l'étudiant
         etudiantRepository.save(etudiant);
 
-        // Test de création d'une réservation
+        // Création d'une réservation liée à la chambre et à l'étudiant
         Reservation reservation = Reservation.builder()
                 .idReservation("RES2023-001")
                 .anneeUniversitaire(new Date())
                 .estValide(true)
+                .chambre(chambre)
                 .build();
+
+        // Ajout de l'étudiant à la réservation
+        reservation.getEtudiants().add(etudiant);
+
+        // Sauvegarde de la réservation
         reservationRepository.save(reservation);
 
-        System.out.println("Test de création des entités terminé avec succès!");
+        System.out.println("Test de création des entités avec associations terminé avec succès!");
     }
 }

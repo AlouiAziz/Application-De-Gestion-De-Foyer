@@ -16,4 +16,8 @@ public class Universite {
 
     private String nomUniversite;
     private String adresse;
+
+    // Université est le parent dans la relation Universite-Foyer
+    @OneToOne(cascade = CascadeType.ALL)
+    private Foyer foyer;
 }

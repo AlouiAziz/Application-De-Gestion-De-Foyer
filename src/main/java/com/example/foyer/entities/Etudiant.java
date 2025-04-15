@@ -3,6 +3,8 @@ package com.example.foyer.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,4 +24,9 @@ public class Etudiant {
 
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
+
+    // Relation avec Réservation
+    @ManyToMany(mappedBy = "etudiants")
+    @Builder.Default
+    private Set<Reservation> reservations = new HashSet<>();
 }

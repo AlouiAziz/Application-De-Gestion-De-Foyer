@@ -2,6 +2,8 @@ package com.example.foyer.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -14,11 +16,19 @@ public class Chambre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idChambre;
 
-    // NumeroChambre est unique comme indiqué dans le TP
     @Column(unique = true)
     private String numeroChambre;
 
-    // Enumération pour le type de chambre
     @Enumerated(EnumType.STRING)
     private TypeChambre typeC;
+
+    // Relation avec Bloc
+    @ManyToOne
+    @JoinColumn(name = "bloc_id")
+    private Bloc bloc;
+
+    // Relation avec Réservation
+    @OneToMany(mappedBy = "chambre")
+    @Builder.Default
+    private Set<Reservation> reservations = new HashSet<>();
 }
